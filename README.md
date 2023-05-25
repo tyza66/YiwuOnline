@@ -1,11 +1,11 @@
 # YiwuOnline
 ### 义乌在线
 <details><summary>登录界面</summary>
-![库存管理界面](./效果/登录页面.png)
+![库存管理界面](效果/登录页面.png)
 </details>
 
 <details><summary>库存管理界面</summary>
-![库存管理界面](./效果/库存管理.png)
+![库存管理界面](效果/库存管理.png)
 </details>
 
 
