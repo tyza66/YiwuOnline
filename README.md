@@ -15,7 +15,7 @@
 ##### 使用技术
 
 - 前端：jQuery，Bootstrap，Layui
-- 后端：Spring，SpringBoot，MyBatis，Swagger2，Thymeleaf
+- 后端：Spring，SpringBoot，MyBatis，Swagger2，Thymeleaf，Hutool
 
 ##### 本地复现
 
