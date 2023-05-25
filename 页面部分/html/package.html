@@ -34,9 +34,9 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="./home.html">库存 <span class="sr-only">(current)</span></a></li>
+                    <li><a href="./home.html">库存</a></li>
                     <li><a href="./out.html">出货</a></li>
-                    <li><a href="./package.html">物流</a></li>
+                    <li class="active"><a href="./package.html">物流<span class="sr-only">(current)</span></a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                             aria-expanded="false">账号管理 <span class="caret"></span></a>
@@ -89,11 +89,11 @@
                     , cols: [[
                         { type: 'checkbox', fixed: 'left' }
                         , { field: 'id', title: 'ID', width: 80, fixed: 'left', unresize: true, sort: true }
-                        , { field: 'name', title: '商品名', width: 150, sort: true }
+                        , { field: 'name', title: '商品名', width: 100, sort: true }
                         , { field: 'info', title: '详细信息', width: 200 }
                         , { field: 'from', title: '货源地', width: 150, sort: true }
                         , { field: 'band', title: '品牌', width: 150, sort: true }
-                        , { field: 'bandpeople', title: '供货商', width: 140, sort: true }
+                        , { field: 'bandpeople', title: '供货商', width: 190, sort: true }
                         , { field: 'phone', title: '供货商电话', width: 150 }
                         , { field: 'price', title: '单价', width: 100, sort: true }
                         , { field: 'num', title: '库存', width: 100, sort: true }
