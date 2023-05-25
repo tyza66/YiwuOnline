@@ -1,7 +1,7 @@
 # YiwuOnline
 ### 义乌在线
 <details><summary>登录界面</summary>
-![库存管理界面](https://github.com/tyza66/YiwuOnline/blob/main/%E6%95%88%E6%9E%9C/%E7%99%BB%E5%BD%95%E9%A1%B5%E9%9D%A2.png?raw=true)
+![](https://github.com/tyza66/YiwuOnline/blob/main/%E6%95%88%E6%9E%9C/%E7%99%BB%E5%BD%95%E9%A1%B5%E9%9D%A2.png?raw=true)
 </details>
 
 <details><summary>库存管理界面</summary>
