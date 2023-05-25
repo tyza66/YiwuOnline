@@ -17,4 +17,9 @@
 - 前端：jQuery，Bootstrap，Layui
 - 后端：Spring，SpringBoot，MyBatis，Swagger2，Thymeleaf
 
+##### 本地复现
+
+1. 使用maven导入依赖
+2. 使用ide运行项目
+
 By：tyza66(洮羱芝闇)
