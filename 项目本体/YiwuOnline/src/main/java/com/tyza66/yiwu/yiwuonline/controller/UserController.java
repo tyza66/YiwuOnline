@@ -47,4 +47,19 @@ public class UserController {
         }
         return end;
     }
+
+    @ApiOperation("用户注册")
+    @PostMapping("/sign")
+    public JSON sign(@RequestBody User user){
+        JSONObject end = JSONUtil.createObj();
+        boolean b = userService.newUser(user.getUsername(), user.getPassword());
+        if(b){
+            end.set("status","200");
+            end.set("message","注册成功");
+        }else{
+            end.set("status","500");
+            end.set("message","注册失败");
+        }
+        return end;
+    }
 }
