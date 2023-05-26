@@ -23,6 +23,7 @@
 
 - 前端：jQuery，Bootstrap，Layui
 - 后端：Spring，SpringBoot，MyBatis，Swagger2，Thymeleaf，Hutool
+- 数据库：MySQL
 
 ##### 本地复现
 
