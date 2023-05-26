@@ -22,7 +22,7 @@
 ##### 使用技术
 
 - 前端：jQuery，Bootstrap，Layui
-- 后端：Spring，SpringBoot，MyBatis，MyBatis Plus，Swagger2，Thymeleaf，Hutool
+- 后端：Spring，SpringBoot，MyBatis，MyBatis Plus，knife4j，Thymeleaf，Hutool
 - 数据库：MySQL
 
 ##### 本地复现
