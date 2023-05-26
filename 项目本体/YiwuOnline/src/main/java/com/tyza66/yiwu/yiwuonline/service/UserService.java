@@ -34,4 +34,15 @@ public class UserService {
         List<User> users = userMapper.selectByMap(one);
         return users;
     }
+
+    //用户账号注册
+    public boolean newUser(String username, String password) {
+        User newOne = new User();
+        int insert = userMapper.insert(newOne);
+        if (insert==1){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

@@ -28,7 +28,10 @@ public class UserController {
     @ApiOperation("获得全部用户信息")
     @GetMapping("/all")
     public JSON getAllUsers() {
-        return JSONUtil.parse(userService.getAllUsers());
+        JSONObject end = JSONUtil.createObj();
+        end.set("status","200");
+        end.set("data",userService.getAllUsers());
+        return end;
     }
 
     @ApiOperation("用户登录")
@@ -37,10 +40,10 @@ public class UserController {
         List<User> users = userService.testUserByName(user.getUsername(), user.getPassword());
         JSONObject end = JSONUtil.createObj();
         if(users.size() == 1){
-            end.set("code","200");
+            end.set("status","200");
             end.set("data",users.get(0));
         }else{
-            end.set("code","403");
+            end.set("status","403");
         }
         return end;
     }
