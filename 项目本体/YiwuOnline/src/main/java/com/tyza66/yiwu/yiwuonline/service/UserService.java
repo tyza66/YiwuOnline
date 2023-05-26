@@ -15,8 +15,9 @@ import java.util.List;
 @Service
 public class UserService {
     @Autowired
-    private UserMapper userMapper;
+    private UserMapper userMapper;//旧版本的的idea识别不到这个bean可以被注入报错 但是实际上可以注入
 
+    //获取全部用户列表 当时实际生产中肯定不可能保留这样的接口 就是联系测试用一下
     public List<User> getAllUsers() {
         return userMapper.selectList(null);
     }
