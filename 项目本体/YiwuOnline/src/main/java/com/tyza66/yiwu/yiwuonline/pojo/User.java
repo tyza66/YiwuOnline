@@ -19,9 +19,9 @@ public class User {
     String username;
     String password;
     String ban;
-    String topUserId;
+    Integer topUserId;
 
-    public User(Integer id, String username, String password, String ban, String topUserId) {
+    public User(Integer id, String username, String password, String ban, Integer topUserId) {
         this.id = id;
         this.username = username;
         this.password = password;
