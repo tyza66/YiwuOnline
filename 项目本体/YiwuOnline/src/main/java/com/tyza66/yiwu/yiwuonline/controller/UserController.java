@@ -29,37 +29,37 @@ public class UserController {
     @GetMapping("/all")
     public JSON getAllUsers() {
         JSONObject end = JSONUtil.createObj();
-        end.set("status","200");
-        end.set("data",userService.getAllUsers());
+        end.set("status", "200");
+        end.set("data", userService.getAllUsers());
         return end;
     }
 
     @ApiOperation("用户登录")
     @PostMapping("/login")
-    public JSON login(@RequestBody User user){
+    public JSON login(@RequestBody User user) {
         List<User> users = userService.testUserByName(user.getUsername(), user.getPassword());
         JSONObject end = JSONUtil.createObj();
         //System.out.println(user.getUsername()+" "+user.getPassword());
-        if(users.size() == 1){
-            end.set("status","200");
-            end.set("data",users.get(0));
-        }else{
-            end.set("status","403");
+        if (users.size() == 1) {
+            end.set("status", "200");
+            end.set("data", users.get(0));
+        } else {
+            end.set("status", "403");
         }
         return end;
     }
 
     @ApiOperation("用户注册")
     @PostMapping("/sign")
-    public JSON sign(@RequestBody User user){
+    public JSON sign(@RequestBody User user) {
         JSONObject end = JSONUtil.createObj();
         boolean b = userService.newUser(user.getUsername(), user.getPassword());
-        if(b){
-            end.set("status","200");
-            end.set("message","注册成功");
-        }else{
-            end.set("status","500");
-            end.set("message","注册失败");
+        if (b) {
+            end.set("status", "200");
+            end.set("message", "注册成功");
+        } else {
+            end.set("status", "500");
+            end.set("message", "注册失败");
         }
         return end;
     }

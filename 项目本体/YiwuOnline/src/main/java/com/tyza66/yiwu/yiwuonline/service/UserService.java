@@ -8,6 +8,7 @@ import com.tyza66.yiwu.yiwuonline.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,7 +19,7 @@ import java.util.List;
  **/
 @Service
 public class UserService {
-    @Autowired
+    @Resource
     private UserMapper userMapper;//旧版本的的idea识别不到这个bean可以被注入报错 但是实际上可以注入
 
     //获取全部用户列表 当时实际生产中肯定不可能保留这样的接口 就是联系测试用一下

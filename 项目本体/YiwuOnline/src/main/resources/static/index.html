@@ -10,9 +10,11 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="./css/layui.css">
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="./js/jquery-3.6.0.js"></script>
     <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/layui.js"></script>
 </head>
 
 <body>
@@ -62,21 +64,28 @@
                         type: "POST",
                         url: "http://localhost:8080/user/login",
                         contentType: "application/json;charset=UTF-8",
-                        data:  JSON.stringify({
+                        data: JSON.stringify({
                             "password": password,
                             "username": username
                         }),
                         dataType: "json",
                         success: function (response) {
-                            if (response.status == 200) {
-                                alert("登录成功");
-                                window.location.href = "./html/home.html";
-                            } else {
-                                alert("登录失败");
-                            }
+                            layui.use('layer', function () {
+                                var layer = layui.layer;
+                                if (response.status == 200) {
+                                    layer.msg("登录成功");
+                                    window.location.href = "./html/home.html";
+                                } else {
+                                    layer.msg("登录失败");
+                                }
+                            });
+
                         },
-                        error:function(){
-                            alert("登录失败");
+                        error: function () {
+                            layui.use('layer', function () {
+                                var layer = layui.layer;
+                                layer.msg("登录失败");
+                            });
                         }
                     });
                 });
