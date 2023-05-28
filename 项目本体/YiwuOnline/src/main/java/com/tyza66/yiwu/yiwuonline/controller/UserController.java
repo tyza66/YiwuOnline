@@ -9,8 +9,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.ui.Model;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 
 /**
  * Author: tyza66
@@ -18,6 +19,7 @@ import java.util.List;
  * Github: https://github.com/tyza66
  **/
 @Api(tags = "用户信息管理")
+@SessionAttributes("currentUser")
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -36,11 +38,12 @@ public class UserController {
 
     @ApiOperation("用户登录")
     @PostMapping("/login")
-    public JSON login(@RequestBody User user) {
+    public JSON login(@RequestBody User user, Model model, HttpSession session) {
         List<User> users = userService.testUserByName(user.getUsername(), user.getPassword());
         JSONObject end = JSONUtil.createObj();
         //System.out.println(user.getUsername()+" "+user.getPassword());
         if (users.size() == 1) {
+            model.addAttribute("currentUser", users.get(0));
             end.set("status", "200");
             end.set("data", users.get(0));
         } else {
@@ -62,5 +65,19 @@ public class UserController {
             end.set("message", "注册失败");
         }
         return end;
+    }
+
+    @GetMapping("/logined")
+    public JSON logined(Model model){
+        JSONObject end = JSONUtil.createObj();
+        User currentUser = (User) model.getAttribute("currentUser");
+        if(currentUser==null) {
+            end.set("status", "200");
+            end.set("message", "n");
+        }else {
+            end.set("status", "200");
+            end.set("message", "y");
+        }
+        return  end;
     }
 }
