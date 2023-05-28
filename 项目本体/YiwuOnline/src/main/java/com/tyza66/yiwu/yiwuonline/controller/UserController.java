@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 import java.util.List;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -80,5 +81,17 @@ public class UserController {
             end.set("message", "y");
         }
         return  end;
+    }
+
+    @ApiOperation("退出登录")
+    @GetMapping("/out")
+    public JSON out(Model model, HttpSession session,HttpServletResponse response){
+        JSONObject end = JSONUtil.createObj();
+        if(model.getAttribute("currentUser")!=null) {
+            session.invalidate();
+        }
+        end.set("status","200");
+        end.set("msg","退出成功");
+        return end;
     }
 }
