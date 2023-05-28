@@ -39,6 +39,7 @@ public class UserController {
     public JSON login(@RequestBody User user){
         List<User> users = userService.testUserByName(user.getUsername(), user.getPassword());
         JSONObject end = JSONUtil.createObj();
+        //System.out.println(user.getUsername()+" "+user.getPassword());
         if(users.size() == 1){
             end.set("status","200");
             end.set("data",users.get(0));

@@ -38,14 +38,14 @@
     <form class="form login">
         <p class="form-title">用户登录</p>
         <div class="input-container">
-            账号：<input type="email" placeholder="在此输入账号">
+            账号：<input type="username" placeholder="在此输入账号">
             <span>
             </span>
         </div>
         <div class="input-container">
             密码：<input type="password" placeholder="在此输入密码">
         </div>
-        <button type="submit" class="submit">
+        <button type="button" class="submit" id="dl">
             登录
         </button>
 
@@ -53,6 +53,34 @@
             还没有账号?
             <a href="">注册</a>
         </p>
+        <script>
+            $(function () {
+                $("#dl").click(function () {
+                    var username = $("input[type='username']").val();
+                    var password = $("input[type='password']").val();
+                    $.ajax({
+                        type: "POST",
+                        url: "http://localhost:8080/user/login",
+                        contentType: "application/json;charset=UTF-8",
+                        data:  JSON.stringify({
+                            "password": password,
+                            "username": username
+                        }),
+                        dataType: "json",
+                        success: function (response) {
+                            if (response.status == 200) {
+                                alert("登录成功");
+                            } else {
+                                alert("登录失败");
+                            }
+                        },
+                        error:function(){
+                            alert("登录失败");
+                        }
+                    });
+                });
+            });
+        </script>
     </form>
 
 </body>
