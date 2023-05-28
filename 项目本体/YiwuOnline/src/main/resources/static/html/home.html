@@ -78,7 +78,7 @@
 
                 table.render({
                     elem: '#table'
-                    , url: '../temp/demo1.json.js'/*tpa=http://www.layui.com/test/table/demo1.json*/
+                    , url: '../inventory/getAll'/*tpa=http://www.layui.com/test/table/demo1.json*/
                     , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
                     , defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
                         title: '提示'
@@ -91,9 +91,9 @@
                         , { field: 'id', title: 'ID', width: 80, fixed: 'left', unresize: true, sort: true }
                         , { field: 'name', title: '商品名', width: 150, sort: true }
                         , { field: 'info', title: '详细信息', width: 200 }
-                        , { field: 'from', title: '货源地', width: 150, sort: true }
+                        , { field: 'from1', title: '货源地', width: 150, sort: true }
                         , { field: 'band', title: '品牌', width: 150, sort: true }
-                        , { field: 'bandpeople', title: '供货商', width: 140, sort: true }
+                        , { field: 'bandPeople', title: '供货商', width: 140, sort: true }
                         , { field: 'phone', title: '供货商电话', width: 150 }
                         , { field: 'price', title: '单价', width: 100, sort: true }
                         , { field: 'num', title: '库存', width: 100, sort: true }

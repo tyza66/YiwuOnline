@@ -67,6 +67,7 @@ public class UserController {
         return end;
     }
 
+    @ApiOperation("检测登录状态")
     @GetMapping("/logined")
     public JSON logined(Model model){
         JSONObject end = JSONUtil.createObj();

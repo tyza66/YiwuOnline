@@ -15,7 +15,8 @@ public class Inventory {
     Integer id;
     String name;
     String info;
-    String from;
+    @TableField("from1")
+    String from1;
     String band;
     @TableField("bandpeople")
     String bandPeople;
