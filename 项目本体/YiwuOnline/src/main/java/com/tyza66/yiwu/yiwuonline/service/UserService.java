@@ -37,7 +37,7 @@ public class UserService {
 
     //用户账号注册
     public boolean newUser(String username, String password) {
-        User newOne = new User(null, username, password,"false",1);
+        User newOne = new User(username, username, password,"false",1);
         int insert = userMapper.insert(newOne);
         if (insert>=1){
             return true;

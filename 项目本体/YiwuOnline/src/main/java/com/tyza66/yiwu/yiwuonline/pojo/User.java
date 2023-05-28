@@ -14,14 +14,14 @@ import lombok.Data;
 @TableName("user")
 public class User {
     @TableId
-    Integer id;
+    String id;
     @TableField("username")
     String username;
     String password;
     String ban;
     Integer topUserId;
 
-    public User(Integer id, String username, String password, String ban, Integer topUserId) {
+    public User(String id, String username, String password, String ban, Integer topUserId) {
         this.id = id;
         this.username = username;
         this.password = password;
