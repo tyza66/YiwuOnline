@@ -42,7 +42,7 @@
                             aria-expanded="false">账号管理 <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="#">修改密码</a></li>
-                            <li><a href="#">退出登录</a></li>
+                            <li><a href="#" id="exit">退出登录</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -146,6 +146,21 @@
                 });
             });
 
+        </script>
+        <script>
+            $("#exit").click(function () {
+                $.ajax({
+                    type: "GET",
+                    url: "../user/out",
+                    dataType: "json",
+                    success: function (response) {
+                        window.location.href = "../"
+                    },
+                    error:function(){
+                        window.location.href = "../"
+                    }
+                });
+            });
         </script>
     </nav>
 
