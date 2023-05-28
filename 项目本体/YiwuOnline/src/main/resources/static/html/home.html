@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>义乌在线</title>
+    <!--Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/layui.css">
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="../js/jquery-3.6.0.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/layui.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">义乌在线</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="./home.html">库存 <span class="sr-only">(current)</span></a></li>
+                    <li><a href="./out.html">出货</a></li>
+                    <li><a href="./package.html">物流</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                            aria-expanded="false">账号管理 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">修改密码</a></li>
+                            <li><a href="#">退出登录</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="navbar-form navbar-left">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="物流单号">
+                    </div>
+                    <button type="submit" class="btn btn-default">搜索</button>
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="https://github.com/tyza66/YiwuOnline">GITHUB</a></li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+        <table class="layui-hide" id="table" lay-filter="test"></table>
+        <script type="text/html" id="toolbarDemo">
+        <div class="layui-btn-container">
+          <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+          <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+          <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="deleteAll">删除选中行</button>
+        </div>
+      </script>
+        <script type="text/html" id="barDemo">
+      <a class="layui-btn layui-btn-xs" lay-event="out">出货</a>
+      <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+      <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </script>
+
+
+        <script>
+            layui.use('table', function () {
+                var table = layui.table;
+
+                table.render({
+                    elem: '#table'
+                    , url: '../temp/demo1.json.js'/*tpa=http://www.layui.com/test/table/demo1.json*/
+                    , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+                    , defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+                        title: '提示'
+                        , layEvent: 'LAYTABLE_TIPS'
+                        , icon: 'layui-icon-tips'
+                    }]
+                    , title: '货品数据表'
+                    , cols: [[
+                        { type: 'checkbox', fixed: 'left' }
+                        , { field: 'id', title: 'ID', width: 80, fixed: 'left', unresize: true, sort: true }
+                        , { field: 'name', title: '商品名', width: 150, sort: true }
+                        , { field: 'info', title: '详细信息', width: 200 }
+                        , { field: 'from', title: '货源地', width: 150, sort: true }
+                        , { field: 'band', title: '品牌', width: 150, sort: true }
+                        , { field: 'bandpeople', title: '供货商', width: 140, sort: true }
+                        , { field: 'phone', title: '供货商电话', width: 150 }
+                        , { field: 'price', title: '单价', width: 100, sort: true }
+                        , { field: 'num', title: '库存', width: 100, sort: true }
+                        , { fixed: 'right', title: '操作', toolbar: '#barDemo', width: 200 }
+                    ]]
+                });
+                //监听行工具事件
+                table.on('tool(test)', function (obj) {
+                    var data = obj.data;
+                    //console.log(obj)
+                    if (obj.event === 'del') {
+                        layer.confirm('真的删除商品吗', function (index) {
+                            obj.del();
+                            layer.close(index);
+                        });
+                    } else if (obj.event === 'edit') {
+                        layer.prompt({
+                            formType: 2
+                            , value: data.email
+                        }, function (value, index) {
+                            obj.update({
+                                email: value
+                            });
+                            layer.close(index);
+                        });
+                    }
+                });
+                //头工具栏事件
+                table.on('toolbar(test)', function (obj) {
+                    var checkStatus = table.checkStatus(obj.config.id);
+                    switch (obj.event) {
+                        case 'getCheckData':
+                            var data = checkStatus.data;
+                            layer.alert(JSON.stringify(data));
+                            break;
+                        case 'getCheckLength':
+                            var data = checkStatus.data;
+                            layer.msg('选中了：' + data.length + ' 个');
+                            break;
+                        case 'isAll':
+                            layer.msg(checkStatus.isAll ? '全选' : '未全选');
+                            break;
+
+                        //自定义头工具栏右侧图标 - 提示
+                        case 'LAYTABLE_TIPS':
+                            layer.alert('这是工具栏右侧自定义的一个图标按钮');
+                            break;
+                    };
+                });
+            });
+
+        </script>
+    </nav>
+
+</body>
+
+</html>
