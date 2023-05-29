@@ -83,6 +83,31 @@ public class InventoryController {
         return end;
     }
 
+    @ApiOperation("删除多个库存")
+    @PostMapping("/deleteAll")
+    public JSON deleteAllInventory(@RequestBody List<Inventory> inventories, Model model) {
+        JSONObject end = JSONUtil.createObj();
+        if (model.getAttribute("currentUser") != null) {
+            boolean b = true;
+            for(Inventory one:inventories){
+                if(!inventoryServices.removeOne(one)){
+                    b=false;
+                }
+            }
+            if (b) {
+                end.set("status", "200");
+                end.set("msg", "删除成功");
+            } else {
+                end.set("status", "201");
+                end.set("msg", "删除失败");
+            }
+        } else {
+            end.set("status", "500");
+            end.set("msg", "权限不足");
+        }
+        return end;
+    }
+
     @ApiOperation("修改库存")
     @PostMapping("/update")
     public JSON updateInventory(@RequestBody Inventory inventory, Model model) {

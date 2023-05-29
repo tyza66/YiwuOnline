@@ -112,7 +112,7 @@
                                 url: "http://localhost:8080/inventory/delete",
                                 contentType: "application/json;charset=UTF-8",
                                 data: JSON.stringify({
-                                    "id":data.id
+                                    "id": data.id
                                 }),
                                 dataType: "json",
                                 success: function (response) {
@@ -131,14 +131,16 @@
                             layer.close(index);
                         });
                     } else if (obj.event === 'edit') {
-                        layer.prompt({
-                            formType: 2
-                            , value: data.name
-                        }, function (value, index) {
-                            obj.update({
-                                name: value
-                            });
-                            layer.close(index);
+                        layer.open({
+                            type: 2,
+                            title: '修改项目',
+                            shadeClose: true,
+                            shade: 0.8,
+                            area: ['380px', '90%'],
+                            content: './updateOne.html',
+                            end: function () {
+                                table.reload('table', {});
+                            }
                         });
                     }
                 });
@@ -173,6 +175,37 @@
                             break;
                         case 'isAll':
                             layer.msg(checkStatus.isAll ? '全选' : '未全选');
+                            break;
+                        case 'deleteAll':
+                            var data = checkStatus.data;
+                            if (data.length == 0) {
+                                layer.msg("请先选择要删除的行");
+                            } else {
+                                layer.confirm('真的删除选中行吗', function (index) {
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "http://localhost:8080/inventory/deleteAll",
+                                        contentType: "application/json;charset=UTF-8",
+                                        data: JSON.stringify(data),
+                                        dataType: "json",
+                                        success: function (response) {
+                                            console.log(response);
+                                            if (response.status == 200) {
+                                                parent.layer.msg("删除成功");
+                                                table.reload('table', {});
+                                            } else {
+                                                parent.layer.msg("删除失败");
+                                                table.reload('table', {});
+                                            }
+                                        },
+                                        error: function () {
+                                            parent.layer.msg("删除失败");
+                                            table.reload('table', {});
+                                        }
+                                    });    
+                                    layer.close(index);
+                                });
+                            }
                             break;
                         //自定义头工具栏右侧图标 - 提示
                         case 'LAYTABLE_TIPS':
