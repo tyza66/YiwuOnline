@@ -57,7 +57,7 @@
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
-        <table class="layui-hide" id="table" lay-filter="test"></table>
+        <table class="layui-hide" id="table" lay-filter="table"></table>
         <script type="text/html" id="toolbarDemo">
         <div class="layui-btn-container">
           <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
@@ -102,7 +102,7 @@
                     ]]
                 });
                 //监听行工具事件
-                table.on('tool(test)', function (obj) {
+                table.on('tool(table)', function (obj) {
                     var data = obj.data;
                     //console.log(obj)
                     if (obj.event === 'del') {
@@ -123,7 +123,7 @@
                     }
                 });
                 //头工具栏事件
-                table.on('toolbar(test)', function (obj) {
+                table.on('toolbar(table)', function (obj) {
                     var checkStatus = table.checkStatus(obj.config.id);
                     switch (obj.event) {
                         case 'getCheckData':
@@ -135,7 +135,9 @@
                             layer.msg('选中了：' + data.length + ' 个');
                             break;
                         case 'addOne':
-                            
+                            console.log("giao")
+                            table.reload('table', {});
+                            break;
                             break;
                         case 'isAll':
                             layer.msg(checkStatus.isAll ? '全选' : '未全选');
@@ -159,7 +161,7 @@
                     success: function (response) {
                         window.location.href = "../"
                     },
-                    error:function(){
+                    error: function () {
                         window.location.href = "../"
                     }
                 });
