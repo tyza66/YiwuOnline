@@ -105,19 +105,38 @@
                 //监听行工具事件
                 table.on('tool(table)', function (obj) {
                     var data = obj.data;
-                    //console.log(obj)
                     if (obj.event === 'del') {
                         layer.confirm('真的删除商品吗', function (index) {
-                            obj.del();
+                            $.ajax({
+                                type: "POST",
+                                url: "http://localhost:8080/inventory/delete",
+                                contentType: "application/json;charset=UTF-8",
+                                data: JSON.stringify({
+                                    "id":data.id
+                                }),
+                                dataType: "json",
+                                success: function (response) {
+                                    console.log(response);
+                                    if (response.status == 200) {
+                                        obj.del();
+                                        parent.layer.msg("删除成功");
+                                    } else {
+                                        parent.layer.msg("删除失败");
+                                    }
+                                },
+                                error: function () {
+                                    parent.layer.msg("删除失败");
+                                }
+                            });
                             layer.close(index);
                         });
                     } else if (obj.event === 'edit') {
                         layer.prompt({
                             formType: 2
-                            , value: data.email
+                            , value: data.name
                         }, function (value, index) {
                             obj.update({
-                                email: value
+                                name: value
                             });
                             layer.close(index);
                         });
@@ -155,7 +174,6 @@
                         case 'isAll':
                             layer.msg(checkStatus.isAll ? '全选' : '未全选');
                             break;
-
                         //自定义头工具栏右侧图标 - 提示
                         case 'LAYTABLE_TIPS':
                             layer.alert('这是工具栏右侧自定义的一个图标按钮');
