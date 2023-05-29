@@ -1,9 +1,11 @@
 package com.tyza66.yiwu.yiwuonline.service;
 
 import com.tyza66.yiwu.yiwuonline.mapper.OutboundMapper;
+import com.tyza66.yiwu.yiwuonline.pojo.Outbound;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Author: tyza66
@@ -15,4 +17,7 @@ public class OutboundService {
     @Resource
     OutboundMapper outboundMapper;
 
+    public List<Outbound> getAll() {
+        return outboundMapper.selectList(null);
+    }
 }

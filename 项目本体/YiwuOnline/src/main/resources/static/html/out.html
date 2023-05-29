@@ -66,7 +66,7 @@
         </div>
       </script>
         <script type="text/html" id="barDemo">
-      <a class="layui-btn layui-btn-xs" lay-event="out">出货</a>
+      <a class="layui-btn layui-btn-xs" lay-event="out">发货</a>
       <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
       <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
     </script>
@@ -78,7 +78,7 @@
 
                 table.render({
                     elem: '#table'
-                    , url: '../temp/demo1.json.js'/*tpa=http://www.layui.com/test/table/demo1.json*/
+                    , url: '../outbound/getAll'/*tpa=http://www.layui.com/test/table/demo1.json*/
                     , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
                     , defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
                         title: '提示'
@@ -89,14 +89,11 @@
                     , cols: [[
                         { type: 'checkbox', fixed: 'left' }
                         , { field: 'id', title: 'ID', width: 80, fixed: 'left', unresize: true, sort: true }
-                        , { field: 'name', title: '商品名', width: 100, sort: true }
-                        , { field: 'info', title: '详细信息', width: 200 }
-                        , { field: 'from', title: '货源地', width: 150, sort: true }
-                        , { field: 'band', title: '品牌', width: 150, sort: true }
-                        , { field: 'bandpeople', title: '供货商', width: 190, sort: true }
-                        , { field: 'phone', title: '供货商电话', width: 150 }
-                        , { field: 'price', title: '单价', width: 100, sort: true }
-                        , { field: 'num', title: '库存', width: 100, sort: true }
+                        , { field: 'name', title: '商品名', width: 240, sort: true }
+                        , { field: 'location', title: '发货地', width: 300, sort: true }
+                        , { field: 'express', title: '快递', width: 150, sort: true }
+                        , { field: 'phone', title: '客户电话', width: 150, sort: true }
+                        , { field: 'destination', title: '收货地址', width: 300, sort: true }
                         , { fixed: 'right', title: '操作', toolbar: '#barDemo', width: 200 }
                     ]]
                 });
