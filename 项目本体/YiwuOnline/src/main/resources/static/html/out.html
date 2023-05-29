@@ -146,8 +146,37 @@
             });
 
         </script>
+        <script>
+            $("#exit").click(function () {
+                $.ajax({
+                    type: "GET",
+                    url: "../user/out",
+                    dataType: "json",
+                    success: function (response) {
+                        window.location.href = "../"
+                    },
+                    error: function () {
+                        window.location.href = "../"
+                    }
+                });
+            });
+        </script>
     </nav>
-
+    <script>
+        $(() => {
+            $.ajax({
+                type: "GET",
+                url: "../user/logined",
+                dataType: "json",
+                success: function (response) {
+                    if (response.status != 200) { window.location.href = "../../" }
+                },
+                error: function () {
+                    window.location.href = "../../"
+                }
+            });
+        })
+    </script>
 </body>
 
 </html>
