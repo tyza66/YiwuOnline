@@ -22,7 +22,7 @@ import java.util.List;
  * Date: 2023/05/29 15:59
  * Github: https://github.com/tyza66
  **/
-@Api("快递管理")
+@Api(tags = "快递管理")
 @SessionAttributes("currentUser")
 @RestController
 @RequestMapping("/express")
