@@ -5,6 +5,7 @@ import com.tyza66.yiwu.yiwuonline.pojo.Express;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Author: tyza66
@@ -23,5 +24,9 @@ public class ExpressService {
         }else {
             return false;
         }
+    }
+
+    public List<Express> getAll(){
+        return expressMapper.selectList(null);
     }
 }

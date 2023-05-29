@@ -15,6 +15,6 @@ public class Express {
     String express;
     String phone;
     String destination;
-    String status;
     String trackingNumber;
+    String status;
 }
