@@ -63,6 +63,7 @@
           <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
           <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
           <button class="layui-btn layui-btn-sm" lay-event="addOne">添加项目</button>
+          <button class="layui-btn layui-btn-sm" lay-event="reload">刷新表格</button>
           <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="deleteAll">删除选中行</button>
         </div>
       </script>
@@ -135,9 +136,21 @@
                             layer.msg('选中了：' + data.length + ' 个');
                             break;
                         case 'addOne':
-                            console.log("giao")
+                            layer.open({
+                                type: 2,
+                                title: '添加项目',
+                                shadeClose: true,
+                                shade: 0.8,
+                                area: ['380px', '90%'],
+                                content: './addOne.html'/*tpa=http://www.layui.com/demo/table/user/?id=123*/, //iframe的url
+                                end: function () {
+                                    table.reload('table', {});
+                                }
+                            });
                             table.reload('table', {});
                             break;
+                        case 'reload':
+                            table.reload('table', {});
                             break;
                         case 'isAll':
                             layer.msg(checkStatus.isAll ? '全选' : '未全选');

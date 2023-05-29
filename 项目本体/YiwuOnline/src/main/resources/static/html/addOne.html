@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        .form {
+            background-color: #fff;
+            display: block;
+            padding: 1rem;
+            max-width: 350px;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-title {
+            font-size: 1.25rem;
+            line-height: 1.75rem;
+            font-weight: 600;
+            text-align: center;
+            color: #000;
+        }
+
+        .input-container {
+            position: relative;
+        }
+
+        .input-container input,
+        .form button {
+            outline: none;
+            border: 1px solid #e5e7eb;
+            margin: 8px 0;
+        }
+
+        .input-container input {
+            background-color: #fff;
+            padding: 1rem;
+            padding-right: 3rem;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            width: 80%;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+
+        .submit {
+            display: block;
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
+            padding-left: 1.25rem;
+            padding-right: 1.25rem;
+            background-color: #4F46E5;
+            color: #ffffff;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            font-weight: 500;
+            width: 100%;
+            border-radius: 0.5rem;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        .signup-link {
+            color: #6B7280;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            text-align: center;
+        }
+
+        .signup-link a {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <form class="form">
+        <div class="input-container">
+            商品名
+            <input type="text" placeholder="在此输入商品名">
+            <span>
+            </span>
+        </div>
+        <div class="input-container">
+            详细信息
+            <input type="textarea" placeholder="在此输入详细信息">
+        </div>
+        <div class="input-container">
+            货源地
+            <input type="text" placeholder="在此输入货源地">
+            <span>
+            </span>
+        </div>
+        <div class="input-container">
+            品牌
+            <input type="text" placeholder="在此输入品牌">
+            <span>
+            </span>
+        </div>
+        <div class="input-container">
+            供货商
+            <input type="text" placeholder="在此输入供货商">
+            <span>
+            </span>
+        </div>
+        <div class="input-container">
+            供货商电话
+            <input type="text" placeholder="在此输入供货商电话">
+            <span>
+            </span>
+        </div>
+        <div class="input-container">
+            单价
+            <input type="text" placeholder="在此输入商品单价（带单位）">
+            <span>
+            </span>
+        </div>
+        <div class="input-container">
+            库存
+            <input type="text" placeholder="在此输入库存量（带单位）">
+            <span>
+            </span>
+        </div>
+        <button type="button" class="submit">
+            添加库存
+        </button>
+    </form>
+
+</body>
+
+</html>
