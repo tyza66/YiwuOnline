@@ -131,6 +131,15 @@
                             layer.close(index);
                         });
                     } else if (obj.event === 'edit') {
+                        window.sessionStorage.setItem("id", data.id);
+                        window.sessionStorage.setItem("name", data.name);
+                        window.sessionStorage.setItem("info", data.info);
+                        window.sessionStorage.setItem("from1", data.from1);
+                        window.sessionStorage.setItem("band", data.band);
+                        window.sessionStorage.setItem("bandPeople", data.bandPeople);
+                        window.sessionStorage.setItem("phone", data.phone);
+                        window.sessionStorage.setItem("price", data.price);
+                        window.sessionStorage.setItem("num", data.num);
                         layer.open({
                             type: 2,
                             title: '修改项目',
@@ -202,7 +211,7 @@
                                             parent.layer.msg("删除失败");
                                             table.reload('table', {});
                                         }
-                                    });    
+                                    });
                                     layer.close(index);
                                 });
                             }
@@ -232,7 +241,21 @@
             });
         </script>
     </nav>
-
+    <script>
+        $(() => {
+            $.ajax({
+                type: "GET",
+                url: "../user/logined",
+                dataType: "json",
+                success: function (response) {
+                    if (response.status != 200) { window.location.href = "../../" }
+                },
+                error: function () {
+                    window.location.href = "../../"
+                }
+            });
+        })
+    </script>
 </body>
 
 </html>

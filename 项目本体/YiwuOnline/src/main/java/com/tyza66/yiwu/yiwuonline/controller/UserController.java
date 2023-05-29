@@ -74,7 +74,7 @@ public class UserController {
         JSONObject end = JSONUtil.createObj();
         User currentUser = (User) model.getAttribute("currentUser");
         if(currentUser==null) {
-            end.set("status", "200");
+            end.set("status", "201");
             end.set("message", "n");
         }else {
             end.set("status", "200");
