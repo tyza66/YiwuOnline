@@ -47,7 +47,7 @@ public class InventoryController {
     @PostMapping("/add")
     public JSON addInventory(@RequestBody Inventory inventory, Model model) {
         JSONObject end = JSONUtil.createObj();
-        if (model.getAttribute("currentUser") == null) {
+        if (model.getAttribute("currentUser") != null) {
             boolean b = inventoryServices.addOne(inventory);
             if (b) {
                 end.set("status", "200");
@@ -55,6 +55,46 @@ public class InventoryController {
             } else {
                 end.set("status", "201");
                 end.set("msg", "添加失败");
+            }
+        } else {
+            end.set("status", "500");
+            end.set("msg", "权限不足");
+        }
+        return end;
+    }
+
+    @ApiOperation("删除库存")
+    @PostMapping("/delete")
+    public JSON deleteInventory(@RequestBody Inventory inventory, Model model) {
+        JSONObject end = JSONUtil.createObj();
+        if (model.getAttribute("currentUser") != null) {
+            boolean b = inventoryServices.removeOne(inventory);
+            if (b) {
+                end.set("status", "200");
+                end.set("msg", "删除成功");
+            } else {
+                end.set("status", "201");
+                end.set("msg", "删除失败");
+            }
+        } else {
+            end.set("status", "500");
+            end.set("msg", "权限不足");
+        }
+        return end;
+    }
+
+    @ApiOperation("修改库存")
+    @PostMapping("/update")
+    public JSON updateInventory(@RequestBody Inventory inventory, Model model) {
+        JSONObject end = JSONUtil.createObj();
+        if (model.getAttribute("currentUser") != null) {
+            boolean b = inventoryServices.updateById(inventory);
+            if (b) {
+                end.set("status", "200");
+                end.set("msg", "修改成功");
+            } else {
+                end.set("status", "201");
+                end.set("msg", "修改失败");
             }
         } else {
             end.set("status", "500");

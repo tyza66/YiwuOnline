@@ -1,11 +1,7 @@
 package com.tyza66.yiwu.yiwuonline.service;
 
-import cn.hutool.json.JSON;
-import cn.hutool.json.JSONObject;
-import cn.hutool.json.JSONUtil;
 import com.tyza66.yiwu.yiwuonline.mapper.UserMapper;
 import com.tyza66.yiwu.yiwuonline.pojo.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
