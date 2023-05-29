@@ -9,10 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,18 +28,38 @@ public class InventoryController {
 
     @ApiOperation("获取库存列表")
     @GetMapping("getAll")
-    public JSON getInventory(Model model){
+    public JSON getInventory(Model model) {
         JSONObject end = JSONUtil.createObj();
-        if(model.getAttribute("currentUser")==null){
-            end.set("code","201");
-            end.set("msg","权限不足");
-        }else{
+        if (model.getAttribute("currentUser") == null) {
+            end.set("code", "201");
+            end.set("msg", "权限不足");
+        } else {
             List<Inventory> all = inventoryServices.getAll();
-            end.set("code","0");
-            end.set("msg","");
-            end.set("count",all.size());
-            end.set("data",all);
+            end.set("code", "0");
+            end.set("msg", "");
+            end.set("count", all.size());
+            end.set("data", all);
         }
-        return  end;
+        return end;
+    }
+
+    @ApiOperation("添加库存")
+    @PostMapping("/add")
+    public JSON addInventory(@RequestBody Inventory inventory, Model model) {
+        JSONObject end = JSONUtil.createObj();
+        if (model.getAttribute("currentUser") == null) {
+            boolean b = inventoryServices.addOne(inventory);
+            if (b) {
+                end.set("status", "200");
+                end.set("msg", "添加成功");
+            } else {
+                end.set("status", "201");
+                end.set("msg", "添加失败");
+            }
+        } else {
+            end.set("status", "500");
+            end.set("msg", "权限不足");
+        }
+        return end;
     }
 }

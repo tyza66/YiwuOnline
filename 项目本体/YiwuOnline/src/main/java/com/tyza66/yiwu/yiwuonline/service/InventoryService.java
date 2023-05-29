@@ -22,4 +22,13 @@ public class InventoryService {
         return inventoryMapper.selectList(null);
     }
 
+    public boolean addOne(Inventory inventory){
+        int i = inventoryMapper.insertOneAndIdUp(inventory);
+        if(i>=1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 }
