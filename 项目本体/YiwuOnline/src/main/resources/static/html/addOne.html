@@ -125,12 +125,14 @@
             <span>
             </span>
         </div>
-        <button type="button" class="submit">
+        <button type="button" class="submit add">
             添加库存
         </button>
     </form>
     <script>
-        
+        $(".add").click(function(){
+            parent.layer.close(parent.layer.getFrameIndex(window.name))
+        })
     </script>
 </body>
 
