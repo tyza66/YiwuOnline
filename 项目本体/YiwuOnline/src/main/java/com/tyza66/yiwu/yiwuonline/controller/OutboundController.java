@@ -45,19 +45,59 @@ public class OutboundController {
 
     @ApiOperation("添加出库信息")
     @PostMapping("/add")
-    public JSON addOne(@RequestBody Outbound outbound,Model model){
+    public JSON addOne(@RequestBody Outbound outbound, Model model) {
         JSONObject end = JSONUtil.createObj();
         if (model.getAttribute("currentUser") == null) {
             end.set("code", "201");
             end.set("msg", "权限不足");
         } else {
             boolean b = outboundService.addOne(outbound);
-            if(b){
+            if (b) {
                 end.set("status", "200");
                 end.set("msg", "出库成功");
-            }else{
+            } else {
                 end.set("status", "201");
                 end.set("msg", "出库失败");
+            }
+        }
+        return end;
+    }
+
+    @ApiOperation("修改出库信息")
+    @PostMapping("/add")
+    public JSON updateOne(@RequestBody Outbound outbound, Model model) {
+        JSONObject end = JSONUtil.createObj();
+        if (model.getAttribute("currentUser") == null) {
+            end.set("code", "201");
+            end.set("msg", "权限不足");
+        } else {
+            boolean b = outboundService.update(outbound);
+            if (b) {
+                end.set("status", "200");
+                end.set("msg", "修改成功");
+            } else {
+                end.set("status", "201");
+                end.set("msg", "修改失败");
+            }
+        }
+        return end;
+    }
+
+    @ApiOperation("删除出库信息")
+    @PostMapping("/add")
+    public JSON deleteOne(@RequestBody Outbound outbound, Model model) {
+        JSONObject end = JSONUtil.createObj();
+        if (model.getAttribute("currentUser") == null) {
+            end.set("code", "201");
+            end.set("msg", "权限不足");
+        } else {
+            boolean b = outboundService.delete(outbound);
+            if (b) {
+                end.set("status", "200");
+                end.set("msg", "删除成功");
+            } else {
+                end.set("status", "201");
+                end.set("msg", "删除失败");
             }
         }
         return end;

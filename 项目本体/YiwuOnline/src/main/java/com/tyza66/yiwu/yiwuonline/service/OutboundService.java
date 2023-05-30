@@ -3,6 +3,7 @@ package com.tyza66.yiwu.yiwuonline.service;
 import com.tyza66.yiwu.yiwuonline.mapper.OutboundMapper;
 import com.tyza66.yiwu.yiwuonline.pojo.Outbound;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -26,6 +27,24 @@ public class OutboundService {
         if (i >= 1) {
             return true;
         } else {
+            return false;
+        }
+    }
+
+    public boolean update(Outbound outbound){
+        int i = outboundMapper.updateById(outbound);
+        if (i >= 1) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public boolean delete(Outbound outbound){
+        int i = outboundMapper.deleteById(outbound);
+        if (i >= 1) {
+            return true;
+        }else{
             return false;
         }
     }
