@@ -3,6 +3,7 @@ package com.tyza66.yiwu.yiwuonline.controller;
 import cn.hutool.json.JSON;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import com.tyza66.yiwu.yiwuonline.pojo.Inventory;
 import com.tyza66.yiwu.yiwuonline.pojo.Outbound;
 import com.tyza66.yiwu.yiwuonline.service.OutboundService;
 import io.swagger.annotations.Api;
@@ -64,7 +65,7 @@ public class OutboundController {
     }
 
     @ApiOperation("修改出库信息")
-    @PostMapping("/add")
+    @PostMapping("/update")
     public JSON updateOne(@RequestBody Outbound outbound, Model model) {
         JSONObject end = JSONUtil.createObj();
         if (model.getAttribute("currentUser") == null) {
@@ -84,7 +85,7 @@ public class OutboundController {
     }
 
     @ApiOperation("删除出库信息")
-    @PostMapping("/add")
+    @PostMapping("/delete")
     public JSON deleteOne(@RequestBody Outbound outbound, Model model) {
         JSONObject end = JSONUtil.createObj();
         if (model.getAttribute("currentUser") == null) {
@@ -92,6 +93,31 @@ public class OutboundController {
             end.set("msg", "权限不足");
         } else {
             boolean b = outboundService.delete(outbound);
+            if (b) {
+                end.set("status", "200");
+                end.set("msg", "删除成功");
+            } else {
+                end.set("status", "201");
+                end.set("msg", "删除失败");
+            }
+        }
+        return end;
+    }
+
+    @ApiOperation("批量删除出库信息")
+    @PostMapping("/deleteAll")
+    public JSON deleteAll(@RequestBody List<Outbound> outbounds, Model model) {
+        JSONObject end = JSONUtil.createObj();
+        if (model.getAttribute("currentUser") == null) {
+            end.set("code", "201");
+            end.set("msg", "权限不足");
+        } else {
+            boolean b = true;
+            for(Outbound one:outbounds){
+                if(!outboundService.delete(one)){
+                    b=false;
+                }
+            }
             if (b) {
                 end.set("status", "200");
                 end.set("msg", "删除成功");

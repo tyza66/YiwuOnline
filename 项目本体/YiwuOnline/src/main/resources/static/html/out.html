@@ -57,7 +57,7 @@
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
-        <table class="layui-hide" id="table" lay-filter="test"></table>
+        <table class="layui-hide" id="table" lay-filter="table"></table>
         <script type="text/html" id="toolbarDemo">
         <div class="layui-btn-container">
           <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
@@ -99,28 +99,56 @@
                     ]]
                 });
                 //监听行工具事件
-                table.on('tool(test)', function (obj) {
+                table.on('tool(table)', function (obj) {
                     var data = obj.data;
-                    //console.log(obj)
                     if (obj.event === 'del') {
                         layer.confirm('真的删除商品吗', function (index) {
-                            obj.del();
+                            $.ajax({
+                                type: "POST",
+                                url: "http://localhost:8080/outbound/delete",
+                                contentType: "application/json;charset=UTF-8",
+                                data: JSON.stringify({
+                                    "id": data.id
+                                }),
+                                dataType: "json",
+                                success: function (response) {
+                                    console.log(response);
+                                    if (response.status == 200) {
+                                        obj.del();
+                                        parent.layer.msg("删除成功");
+                                    } else {
+                                        parent.layer.msg("删除失败");
+                                    }
+                                },
+                                error: function () {
+                                    parent.layer.msg("删除失败");
+                                }
+                            });
                             layer.close(index);
                         });
                     } else if (obj.event === 'edit') {
-                        layer.prompt({
-                            formType: 2
-                            , value: data.email
-                        }, function (value, index) {
-                            obj.update({
-                                email: value
-                            });
-                            layer.close(index);
+                        window.sessionStorage.setItem("id", data.id);
+                        window.sessionStorage.setItem("name", data.name);
+                        window.sessionStorage.setItem("num", data.num);
+                        window.sessionStorage.setItem("location", data.location);
+                        window.sessionStorage.setItem("express", data.express);
+                        window.sessionStorage.setItem("phone", data.phone);
+                        window.sessionStorage.setItem("destination", data.destination);
+                        layer.open({
+                            type: 2,
+                            title: '修改项目',
+                            shadeClose: true,
+                            shade: 0.8,
+                            area: ['380px', '90%'],
+                            content: './updateOneOutbound.html',
+                            end: function () {
+                                table.reload('table', {});
+                            }
                         });
                     }
                 });
                 //头工具栏事件
-                table.on('toolbar(test)', function (obj) {
+                table.on('toolbar(table)', function (obj) {
                     var checkStatus = table.checkStatus(obj.config.id);
                     switch (obj.event) {
                         case 'getCheckData':
@@ -134,7 +162,37 @@
                         case 'isAll':
                             layer.msg(checkStatus.isAll ? '全选' : '未全选');
                             break;
-
+                        case 'deleteAll':
+                            var data = checkStatus.data;
+                            if (data.length == 0) {
+                                layer.msg("请先选择要删除的行");
+                            } else {
+                                layer.confirm('真的删除选中行吗', function (index) {
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "http://localhost:8080/outbound/deleteAll",
+                                        contentType: "application/json;charset=UTF-8",
+                                        data: JSON.stringify(data),
+                                        dataType: "json",
+                                        success: function (response) {
+                                            console.log(response);
+                                            if (response.status == 200) {
+                                                parent.layer.msg("删除成功");
+                                                table.reload('table', {});
+                                            } else {
+                                                parent.layer.msg("删除失败");
+                                                table.reload('table', {});
+                                            }
+                                        },
+                                        error: function () {
+                                            parent.layer.msg("删除失败");
+                                            table.reload('table', {});
+                                        }
+                                    });
+                                    layer.close(index);
+                                });
+                            }
+                            break;
                         //自定义头工具栏右侧图标 - 提示
                         case 'LAYTABLE_TIPS':
                             layer.alert('这是工具栏右侧自定义的一个图标按钮');
