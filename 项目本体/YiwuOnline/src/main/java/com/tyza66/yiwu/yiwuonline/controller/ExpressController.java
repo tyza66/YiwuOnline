@@ -10,10 +10,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -43,6 +40,26 @@ public class ExpressController {
             end.set("msg", "");
             end.set("count", all.size());
             end.set("data", all);
+        }
+        return end;
+    }
+
+    @ApiOperation("添加快递")
+    @PostMapping("/add")
+    public JSON addOne(@RequestBody Express express,Model model){
+        JSONObject end = JSONUtil.createObj();
+        if (model.getAttribute("currentUser") == null) {
+            end.set("code", "201");
+            end.set("msg", "权限不足");
+        } else {
+            boolean b = expressService.addOne(express);
+            if (b) {
+                end.set("status", "200");
+                end.set("msg", "");
+            }else{
+                end.set("status", "201");
+                end.set("msg", "");
+            }
         }
         return end;
     }

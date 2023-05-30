@@ -10,6 +10,6 @@ import org.apache.ibatis.annotations.Insert;
  * Github: https://github.com/tyza66
  **/
 public interface ExpressMapper extends BaseMapper<Express> {
-    @Insert("")
+    @Insert("INSERT INTO `yiwu`.`express` (`name`, `location`, `express`, `phone`, `destination`, `tracking_number`, `status`, `num`) VALUES ( #{}, #{}, #{}, #{}, #{}, #{}, #{}, #{})")
     public int addOneAndIdUp(Express express);
 }

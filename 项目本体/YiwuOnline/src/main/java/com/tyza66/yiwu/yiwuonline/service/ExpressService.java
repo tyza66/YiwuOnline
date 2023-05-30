@@ -29,4 +29,22 @@ public class ExpressService {
     public List<Express> getAll(){
         return expressMapper.selectList(null);
     }
+
+    public boolean update(Express express){
+        int i = expressMapper.updateById(express);
+        if(i>=1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public boolean delete(Express express){
+        int i = expressMapper.deleteById(express);
+        if(i>=1){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
