@@ -4,7 +4,6 @@ import cn.hutool.json.JSON;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.tyza66.yiwu.yiwuonline.pojo.Express;
-import com.tyza66.yiwu.yiwuonline.pojo.Outbound;
 import com.tyza66.yiwu.yiwuonline.service.ExpressService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -59,6 +58,71 @@ public class ExpressController {
             }else{
                 end.set("status", "201");
                 end.set("msg", "");
+            }
+        }
+        return end;
+    }
+
+    @ApiOperation("修改快递")
+    @PostMapping("/update")
+    public JSON update(@RequestBody Express express,Model model){
+        JSONObject end = JSONUtil.createObj();
+        if (model.getAttribute("currentUser") == null) {
+            end.set("code", "201");
+            end.set("msg", "权限不足");
+        } else {
+            boolean b = expressService.update(express);
+            if (b) {
+                end.set("status", "200");
+                end.set("msg", "");
+            }else{
+                end.set("status", "201");
+                end.set("msg", "");
+            }
+        }
+        return end;
+    }
+
+    @ApiOperation("删除快递")
+    @PostMapping("/delete")
+    public JSON delete(@RequestBody Express express,Model model){
+        JSONObject end = JSONUtil.createObj();
+        if (model.getAttribute("currentUser") == null) {
+            end.set("code", "201");
+            end.set("msg", "权限不足");
+        } else {
+            boolean b = expressService.delete(express);
+            if (b) {
+                end.set("status", "200");
+                end.set("msg", "");
+            }else{
+                end.set("status", "201");
+                end.set("msg", "");
+            }
+        }
+        return end;
+    }
+
+    @ApiOperation("删除多个快递")
+    @PostMapping("/deleteAll")
+    public JSON deleteAll(@RequestBody List<Express> expresses,Model model){
+        JSONObject end = JSONUtil.createObj();
+        if (model.getAttribute("currentUser") == null) {
+            end.set("code", "201");
+            end.set("msg", "权限不足");
+        } else {
+            boolean b = true;
+            for(Express one:expresses){
+                if(!expressService.delete(one)){
+                    b=false;
+                }
+            }
+            if (b) {
+                end.set("status", "200");
+                end.set("msg", "删除成功");
+            } else {
+                end.set("status", "201");
+                end.set("msg", "删除失败");
             }
         }
         return end;
