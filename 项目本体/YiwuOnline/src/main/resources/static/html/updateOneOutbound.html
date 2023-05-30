@@ -86,42 +86,32 @@
             </span>
         </div>
         <div class="input-container">
-            详细信息
-            <input type="textarea" placeholder="在此输入详细信息" class="xxxx">
-        </div>
-        <div class="input-container">
-            货源地
-            <input type="text" placeholder="在此输入货源地" class="hyd">
+            数量
+            <input type="text" placeholder="在此输入商品名" class="sl">
             <span>
             </span>
         </div>
         <div class="input-container">
-            品牌
-            <input type="text" placeholder="在此输入品牌" class="pp">
+            发货地
+            <input type="text" placeholder="在此输入商品名" class="fyd">
             <span>
             </span>
         </div>
         <div class="input-container">
-            供货商
-            <input type="text" placeholder="在此输入供货商" class="ghs">
+            快递
+            <input type="text" placeholder="在此输入商品名" class="kd">
             <span>
             </span>
         </div>
         <div class="input-container">
-            供货商电话
-            <input type="text" placeholder="在此输入供货商电话" class="ghsdh">
+            客户电话
+            <input type="text" placeholder="在此输入商品名" class="khdh">
             <span>
             </span>
         </div>
         <div class="input-container">
-            单价
-            <input type="text" placeholder="在此输入商品单价（带单位）" class="dj">
-            <span>
-            </span>
-        </div>
-        <div class="input-container">
-            库存
-            <input type="text" placeholder="在此输入库存量（带单位）" class="kc">
+            收货地址
+            <input type="text" placeholder="在此输入商品名" class="shdz">
             <span>
             </span>
         </div>
@@ -131,30 +121,26 @@
     </form>
     <script>
         $(function () {
-            $(".pp").val(sessionStorage.getItem("band"))
-            $(".ghs").val(sessionStorage.getItem("bandPeople"))
-            $(".hyd").val(sessionStorage.getItem("from1"))
-            $(".xxxx").val(sessionStorage.getItem("info"))
-            $(".spm").val(sessionStorage.getItem("name"))
-            $(".kc").val(sessionStorage.getItem("num"))
-            $(".ghsdh").val(sessionStorage.getItem("phone"))
-            $(".dj").val(sessionStorage.getItem("price"))
+            $(".spm").val(sessionStorage.getItem("name"));
+            $(".sl").val(sessionStorage.getItem("num"));
+            $(".fyd").val(sessionStorage.getItem("location"));
+            $(".kd").val(sessionStorage.getItem("express"));
+            $(".khdh").val(sessionStorage.getItem("phone"));
+            $(".shdz").val(sessionStorage.getItem("destination"));
         })
         $(".add").click(function () {
             $.ajax({
                 type: "POST",
-                url: "http://localhost:8080/inventory/update",
+                url: "http://localhost:8080/outbound/update",
                 contentType: "application/json;charset=UTF-8",
                 data: JSON.stringify({
+                    "destination": $(".shdz").val(),
+                    "express": $(".kd").val(),
                     "id": sessionStorage.getItem("id"),
-                    "band": $(".pp").val(),
-                    "bandPeople": $(".ghs").val(),
-                    "from1": $(".hyd").val(),
-                    "info": $(".xxxx").val(),
+                    "location": $(".fyd").val(),
                     "name": $(".spm").val(),
-                    "num": $(".kc").val(),
-                    "phone": $(".ghsdh").val(),
-                    "price": $(".dj").val()
+                    "num": $(".sl").val(),
+                    "phone": $(".khdh").val()
                 }),
                 dataType: "json",
                 success: function (response) {
