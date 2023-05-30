@@ -43,11 +43,23 @@ public class OutboundController {
         return end;
     }
 
-    @ApiOperation("")
+    @ApiOperation("添加出库信息")
     @PostMapping("/add")
-    public JSON addOne(Model model){
+    public JSON addOne(@RequestBody Outbound outbound,Model model){
         JSONObject end = JSONUtil.createObj();
-
+        if (model.getAttribute("currentUser") == null) {
+            end.set("code", "201");
+            end.set("msg", "权限不足");
+        } else {
+            boolean b = outboundService.addOne(outbound);
+            if(b){
+                end.set("code", "200");
+                end.set("msg", "添加成功");
+            }else{
+                end.set("code", "201");
+                end.set("msg", "添加失败");
+            }
+        }
         return end;
     }
 }
