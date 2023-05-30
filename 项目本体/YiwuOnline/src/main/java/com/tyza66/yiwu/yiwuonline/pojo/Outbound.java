@@ -1,5 +1,6 @@
 package com.tyza66.yiwu.yiwuonline.pojo;
 
+import io.swagger.models.auth.In;
 import lombok.Data;
 
 /**
@@ -15,4 +16,5 @@ public class Outbound {
     String express;
     String phone;
     String destination;
+    Integer num;
 }

@@ -23,7 +23,11 @@
 
 - 前端：jQuery，Bootstrap，Layui
 - 后端：Spring，SpringBoot，MyBatis，MyBatis Plus，knife4j，Thymeleaf，Hutool
-- 数据库：MySQL
+- 数据库：MySQL问题
+
+##### 问题
+
+- 在数据库设计的时候有一些疏漏，货物的钱的单位应该单独的出来，以方便库存数量的修改，而不是本项目中的使用字符串来一起存储库存量和单位，按照现在的形式出库商品时很难实现更新库存数量，于是在本项目中出库商品的时候商品库存数量不会自动进行更改，而需要进行手动的修改。
 
 ##### 本地复现
 

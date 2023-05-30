@@ -53,11 +53,11 @@ public class OutboundController {
         } else {
             boolean b = outboundService.addOne(outbound);
             if(b){
-                end.set("code", "200");
-                end.set("msg", "添加成功");
+                end.set("status", "200");
+                end.set("msg", "出库成功");
             }else{
-                end.set("code", "201");
-                end.set("msg", "添加失败");
+                end.set("status", "201");
+                end.set("msg", "出库失败");
             }
         }
         return end;

@@ -17,4 +17,5 @@ public class Express {
     String destination;
     String trackingNumber;
     String status;
+    Integer num;
 }

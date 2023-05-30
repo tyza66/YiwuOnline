@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <script src="../js/jquery-3.6.0.js"></script>
+    <style>
+        .form {
+            background-color: #fff;
+            display: block;
+            padding: 1rem;
+            max-width: 350px;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-title {
+            font-size: 1.25rem;
+            line-height: 1.75rem;
+            font-weight: 600;
+            text-align: center;
+            color: #000;
+        }
+
+        .input-container {
+            position: relative;
+        }
+
+        .input-container input,
+        .form button {
+            outline: none;
+            border: 1px solid #e5e7eb;
+            margin: 8px 0;
+        }
+
+        .input-container input {
+            background-color: #fff;
+            padding: 1rem;
+            padding-right: 3rem;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            width: 80%;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+
+        .submit {
+            display: block;
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
+            padding-left: 1.25rem;
+            padding-right: 1.25rem;
+            background-color: #4F46E5;
+            color: #ffffff;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            font-weight: 500;
+            width: 100%;
+            border-radius: 0.5rem;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        .signup-link {
+            color: #6B7280;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            text-align: center;
+        }
+
+        .signup-link a {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <form class="form">
+        <div class="input-container">
+            商品名
+            <input type="text" placeholder="在此输入商品名" class="spm">
+            <span>
+            </span>
+        </div>
+        <div class="input-container">
+            数量
+            <input type="text" placeholder="在此输入数量" class="sl">
+            <span>
+            </span>
+        </div>
+        <div class="input-container">
+            快递
+            <input type="text" placeholder="在此输入发货地" class="kd">
+            <span>
+            </span>
+        </div>
+        <div class="input-container">
+            发货地
+            <input type="text" placeholder="在此输入发货地" class="fhd">
+            <span>
+            </span>
+        </div>
+        <div class="input-container">
+            客户电话
+            <input type="text" placeholder="在此输入客户电话" class="khdh">
+            <span>
+            </span>
+        </div>
+        <div class="input-container">
+            收货地址
+            <input type="text" placeholder="在此输入收货地址" class="shdz">
+            <span>
+            </span>
+        </div>
+        <button type="button" class="submit add">
+            提交出库
+        </button>
+    </form>
+    <script>
+        $(function () {
+            $(".spm").val(sessionStorage.getItem("name"))
+            $(".fhd").val(sessionStorage.getItem("from1"))
+        })
+        $(".add").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8080/outbound/add",
+                contentType: "application/json;charset=UTF-8",
+                data: JSON.stringify({
+                    "destination": $(".shdz").val(),
+                    "express": $(".kd").val(),
+                    "id": 0,
+                    "location": $(".fhd").val(),
+                    "name": $(".spm").val(),
+                    "num": $(".sl").val(),
+                    "phone": $(".khdh").val()
+                }),
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+                    if (response.status == 200) {
+                        parent.layer.msg("出库成功");
+                    } else {
+                        parent.layer.msg("出库失败");
+                    }
+                },
+                error: function () {
+                    parent.layer.msg("出库失败");
+                }
+            });
+            parent.layer.close(parent.layer.getFrameIndex(window.name))
+        })
+    </script>
+</body>
+
+</html>

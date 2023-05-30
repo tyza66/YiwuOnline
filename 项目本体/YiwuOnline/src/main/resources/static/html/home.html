@@ -151,6 +151,27 @@
                                 table.reload('table', {});
                             }
                         });
+                    } else if (obj.event === 'out') {
+                        window.sessionStorage.setItem("id", data.id);
+                        window.sessionStorage.setItem("name", data.name);
+                        window.sessionStorage.setItem("info", data.info);
+                        window.sessionStorage.setItem("from1", data.from1);
+                        window.sessionStorage.setItem("band", data.band);
+                        window.sessionStorage.setItem("bandPeople", data.bandPeople);
+                        window.sessionStorage.setItem("phone", data.phone);
+                        window.sessionStorage.setItem("price", data.price);
+                        window.sessionStorage.setItem("num", data.num);
+                        layer.open({
+                            type: 2,
+                            title: '出库',
+                            shadeClose: true,
+                            shade: 0.8,
+                            area: ['380px', '90%'],
+                            content: './outOne.html',
+                            end: function () {
+                                table.reload('table', {});
+                            }
+                        });
                     }
                 });
                 //头工具栏事件
