@@ -98,8 +98,8 @@
             </span>
         </div>
         <div class="input-container">
-            快递
-            <input type="text" placeholder="在此输入快递" class="kd">
+            快递单号
+            <input type="text" placeholder="在此输入快递单号" class="kd">
             <span>
             </span>
         </div>
@@ -115,8 +115,14 @@
             <span>
             </span>
         </div>
+        <div class="input-container">
+            状态
+            <input type="text" placeholder="在此输入状态" class="zt">
+            <span>
+            </span>
+        </div>
         <button type="button" class="submit add">
-            修改内容
+            发货
         </button>
     </form>
     <script>
@@ -131,7 +137,7 @@
         $(".add").click(function () {
             $.ajax({
                 type: "POST",
-                url: "http://localhost:8080/outbound/update",
+                url: "http://localhost:8080/express/add",
                 contentType: "application/json;charset=UTF-8",
                 data: JSON.stringify({
                     "destination": $(".shdz").val(),
@@ -140,19 +146,20 @@
                     "location": $(".fyd").val(),
                     "name": $(".spm").val(),
                     "num": $(".sl").val(),
-                    "phone": $(".khdh").val()
+                    "phone": $(".khdh").val(),
+                    "status":$(".zt").val()
                 }),
                 dataType: "json",
                 success: function (response) {
                     console.log(response);
                     if (response.status == 200) {
-                        parent.layer.msg("修改成功");
+                        parent.layer.msg("发货成功");
                     } else {
-                        parent.layer.msg("修改失败");
+                        parent.layer.msg("发货失败");
                     }
                 },
                 error: function () {
-                    parent.layer.msg("修改失败");
+                    parent.layer.msg("发货失败");
                 }
             });
             parent.layer.close(parent.layer.getFrameIndex(window.name))

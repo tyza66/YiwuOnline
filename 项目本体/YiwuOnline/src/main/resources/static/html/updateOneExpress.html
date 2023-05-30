@@ -115,6 +115,12 @@
             <span>
             </span>
         </div>
+        <div class="input-container">
+            状态
+            <input type="text" placeholder="在此输入状态" class="zt">
+            <span>
+            </span>
+        </div>
         <button type="button" class="submit add">
             修改内容
         </button>
@@ -127,11 +133,12 @@
             $(".kd").val(sessionStorage.getItem("express"));
             $(".khdh").val(sessionStorage.getItem("phone"));
             $(".shdz").val(sessionStorage.getItem("destination"));
+            $(".zt").val(sessionStorage.getItem("status"));
         })
         $(".add").click(function () {
             $.ajax({
                 type: "POST",
-                url: "http://localhost:8080/outbound/update",
+                url: "http://localhost:8080/express/update",
                 contentType: "application/json;charset=UTF-8",
                 data: JSON.stringify({
                     "destination": $(".shdz").val(),
@@ -140,7 +147,8 @@
                     "location": $(".fyd").val(),
                     "name": $(".spm").val(),
                     "num": $(".sl").val(),
-                    "phone": $(".khdh").val()
+                    "phone": $(".khdh").val(),
+                    "status": $(".zt").val()
                 }),
                 dataType: "json",
                 success: function (response) {

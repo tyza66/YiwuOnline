@@ -50,7 +50,7 @@
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="物流单号">
                     </div>
-                    <button type="submit" class="btn btn-default">搜索</button>
+                    <button type="submit" id="search" class="btn btn-default">搜索</button>
                 </form>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="https://github.com/tyza66/YiwuOnline">GITHUB</a></li>
@@ -102,7 +102,7 @@
                 table.on('tool(table)', function (obj) {
                     var data = obj.data;
                     if (obj.event === 'del') {
-                        layer.confirm('真的删除商品吗', function (index) {
+                        layer.confirm('真的删除出货吗', function (index) {
                             $.ajax({
                                 type: "POST",
                                 url: "http://localhost:8080/outbound/delete",
@@ -141,6 +141,25 @@
                             shade: 0.8,
                             area: ['380px', '90%'],
                             content: './updateOneOutbound.html',
+                            end: function () {
+                                table.reload('table', {});
+                            }
+                        });
+                    } else if (obj.event === 'out') {
+                        window.sessionStorage.setItem("id", data.id);
+                        window.sessionStorage.setItem("name", data.name);
+                        window.sessionStorage.setItem("num", data.num);
+                        window.sessionStorage.setItem("location", data.location);
+                        window.sessionStorage.setItem("express", data.express);
+                        window.sessionStorage.setItem("phone", data.phone);
+                        window.sessionStorage.setItem("destination", data.destination);
+                        layer.open({
+                            type: 2,
+                            title: '发货',
+                            shadeClose: true,
+                            shade: 0.8,
+                            area: ['380px', '90%'],
+                            content: './addOneExpress.html',
                             end: function () {
                                 table.reload('table', {});
                             }
@@ -231,6 +250,12 @@
                     window.location.href = "../../"
                 }
             });
+        })
+    </script>
+    <script>
+        $("#search").click(function(){
+            event.preventDefault()
+            window.location.href = "https://t.17track.net/zh-cn#nums=" + $(".form-control").val();
         })
     </script>
 </body>

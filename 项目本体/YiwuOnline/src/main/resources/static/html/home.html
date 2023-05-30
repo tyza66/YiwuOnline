@@ -50,7 +50,7 @@
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="物流单号">
                     </div>
-                    <button type="submit" class="btn btn-default">搜索</button>
+                    <button type="submit" id="search" class="btn btn-default">搜索</button>
                 </form>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="https://github.com/tyza66/YiwuOnline">GITHUB</a></li>
@@ -247,7 +247,7 @@
 
         </script>
         <script>
-            $("#exit").click(function () {
+            $("#exit").click(function (event) {
                 $.ajax({
                     type: "GET",
                     url: "../user/out",
@@ -275,6 +275,12 @@
                     window.location.href = "../../"
                 }
             });
+        })
+    </script>
+    <script>
+        $("#search").click(function(){
+            event.preventDefault()
+            window.location.href = "https://t.17track.net/zh-cn#nums=" + $(".form-control").val();
         })
     </script>
 </body>

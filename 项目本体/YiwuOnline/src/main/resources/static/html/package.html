@@ -50,14 +50,14 @@
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="物流单号">
                     </div>
-                    <button type="submit" class="btn btn-default">搜索</button>
+                    <button type="submit" id="search" class="btn btn-default">搜索</button>
                 </form>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="https://github.com/tyza66/YiwuOnline">GITHUB</a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
-        <table class="layui-hide" id="table" lay-filter="test"></table>
+        <table class="layui-hide" id="table" lay-filter="table"></table>
         <script type="text/html" id="toolbarDemo">
         <div class="layui-btn-container">
           <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
@@ -66,7 +66,6 @@
         </div>
       </script>
         <script type="text/html" id="barDemo">
-      <a class="layui-btn layui-btn-xs" lay-event="out">出货</a>
       <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
       <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
     </script>
@@ -78,7 +77,7 @@
 
                 table.render({
                     elem: '#table'
-                    , url: '../temp/demo1.json.js'/*tpa=http://www.layui.com/test/table/demo1.json*/
+                    , url: '../express/all'/*tpa=http://www.layui.com/test/table/demo1.json*/
                     , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
                     , defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
                         title: '提示'
@@ -89,40 +88,69 @@
                     , cols: [[
                         { type: 'checkbox', fixed: 'left' }
                         , { field: 'id', title: 'ID', width: 80, fixed: 'left', unresize: true, sort: true }
-                        , { field: 'name', title: '商品名', width: 100, sort: true }
-                        , { field: 'info', title: '详细信息', width: 200 }
-                        , { field: 'from', title: '货源地', width: 150, sort: true }
-                        , { field: 'band', title: '品牌', width: 150, sort: true }
-                        , { field: 'bandpeople', title: '供货商', width: 190, sort: true }
-                        , { field: 'phone', title: '供货商电话', width: 150 }
-                        , { field: 'price', title: '单价', width: 100, sort: true }
-                        , { field: 'num', title: '库存', width: 100, sort: true }
+                        , { field: 'name', title: '商品名', width: 180, sort: true }
+                        , { field: 'num', title: '数量', width: 100, sort: true }
+                        , { field: 'location', title: '发货地', width: 220, sort: true }
+                        , { field: 'express', title: '快递', width: 150, sort: true }
+                        , { field: 'phone', title: '客户电话', width: 150, sort: true }
+                        , { field: 'destination', title: '收货地址', width: 220, sort: true }
+                        , { field: 'status', title: '状态', width: 120, sort: true }
                         , { fixed: 'right', title: '操作', toolbar: '#barDemo', width: 200 }
                     ]]
                 });
                 //监听行工具事件
-                table.on('tool(test)', function (obj) {
+                table.on('tool(table)', function (obj) {
                     var data = obj.data;
                     //console.log(obj)
                     if (obj.event === 'del') {
-                        layer.confirm('真的删除商品吗', function (index) {
-                            obj.del();
+                        layer.confirm('真的删除快递吗', function (index) {
+                            $.ajax({
+                                type: "POST",
+                                url: "http://localhost:8080/express/delete",
+                                contentType: "application/json;charset=UTF-8",
+                                data: JSON.stringify({
+                                    "id": data.id
+                                }),
+                                dataType: "json",
+                                success: function (response) {
+                                    console.log(response);
+                                    if (response.status == 200) {
+                                        obj.del();
+                                        parent.layer.msg("删除成功");
+                                    } else {
+                                        parent.layer.msg("删除失败");
+                                    }
+                                },
+                                error: function () {
+                                    parent.layer.msg("删除失败");
+                                }
+                            });
                             layer.close(index);
                         });
                     } else if (obj.event === 'edit') {
-                        layer.prompt({
-                            formType: 2
-                            , value: data.email
-                        }, function (value, index) {
-                            obj.update({
-                                email: value
-                            });
-                            layer.close(index);
+                        window.sessionStorage.setItem("id", data.id);
+                        window.sessionStorage.setItem("name", data.name);
+                        window.sessionStorage.setItem("num", data.num);
+                        window.sessionStorage.setItem("location", data.location);
+                        window.sessionStorage.setItem("express", data.express);
+                        window.sessionStorage.setItem("phone", data.phone);
+                        window.sessionStorage.setItem("destination", data.destination);
+                        window.sessionStorage.setItem("status", data.status);
+                        layer.open({
+                            type: 2,
+                            title: '修改项目',
+                            shadeClose: true,
+                            shade: 0.8,
+                            area: ['380px', '90%'],
+                            content: './updateOneExpress.html',
+                            end: function () {
+                                table.reload('table', {});
+                            }
                         });
                     }
                 });
                 //头工具栏事件
-                table.on('toolbar(test)', function (obj) {
+                table.on('toolbar(table)', function (obj) {
                     var checkStatus = table.checkStatus(obj.config.id);
                     switch (obj.event) {
                         case 'getCheckData':
@@ -136,7 +164,37 @@
                         case 'isAll':
                             layer.msg(checkStatus.isAll ? '全选' : '未全选');
                             break;
-
+                        case 'deleteAll':
+                            var data = checkStatus.data;
+                            if (data.length == 0) {
+                                layer.msg("请先选择要删除的行");
+                            } else {
+                                layer.confirm('真的删除选中行吗', function (index) {
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "http://localhost:8080/express/deleteAll",
+                                        contentType: "application/json;charset=UTF-8",
+                                        data: JSON.stringify(data),
+                                        dataType: "json",
+                                        success: function (response) {
+                                            console.log(response);
+                                            if (response.status == 200) {
+                                                parent.layer.msg("删除成功");
+                                                table.reload('table', {});
+                                            } else {
+                                                parent.layer.msg("删除失败");
+                                                table.reload('table', {});
+                                            }
+                                        },
+                                        error: function () {
+                                            parent.layer.msg("删除失败");
+                                            table.reload('table', {});
+                                        }
+                                    });
+                                    layer.close(index);
+                                });
+                            }
+                            break;
                         //自定义头工具栏右侧图标 - 提示
                         case 'LAYTABLE_TIPS':
                             layer.alert('这是工具栏右侧自定义的一个图标按钮');
@@ -146,8 +204,43 @@
             });
 
         </script>
+        <script>
+            $("#exit").click(function () {
+                $.ajax({
+                    type: "GET",
+                    url: "../user/out",
+                    dataType: "json",
+                    success: function (response) {
+                        window.location.href = "../"
+                    },
+                    error: function () {
+                        window.location.href = "../"
+                    }
+                });
+            });
+        </script>
     </nav>
-
+    <script>
+        $(() => {
+            $.ajax({
+                type: "GET",
+                url: "../user/logined",
+                dataType: "json",
+                success: function (response) {
+                    if (response.status != 200) { window.location.href = "../../" }
+                },
+                error: function () {
+                    window.location.href = "../../"
+                }
+            });
+        })
+    </script>
+    <script>
+        $("#search").click(function(){
+            event.preventDefault()
+            window.location.href = "https://t.17track.net/zh-cn#nums=" + $(".form-control").val();
+        })
+    </script>
 </body>
 
 </html>
