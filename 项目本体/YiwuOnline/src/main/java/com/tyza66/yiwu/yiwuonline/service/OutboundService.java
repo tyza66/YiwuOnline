@@ -20,4 +20,13 @@ public class OutboundService {
     public List<Outbound> getAll() {
         return outboundMapper.selectList(null);
     }
+
+    public boolean addOne(Outbound outbound) {
+        int i = outboundMapper.addOneAndIdUp(outbound);
+        if (i >= 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
