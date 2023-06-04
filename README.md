@@ -24,7 +24,7 @@
 
 - 前端：jQuery，Bootstrap，Layui
 - 后端：Spring，SpringBoot，MyBatis，MyBatis Plus，knife4j，Thymeleaf，Hutool
-- 数据库：MySQL问题
+- 数据库：MySQL
 
 ##### 问题
 
